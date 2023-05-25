@@ -12,6 +12,7 @@ use yii\grid\GridView;
 ?>
 <div class="basket-index">
 
+<?php if($model ): ?>
     <div class="body-content mt-4 mb-4">
         <hr class="bg-info">
         <div class="row">
@@ -33,6 +34,8 @@ use yii\grid\GridView;
             <?php }  ?>
         </div>
     </div>
-
+<?php else: ?>
+    Корзина пуста
+<?php endif; ?>
 
 </div>

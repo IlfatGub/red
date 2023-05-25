@@ -26,7 +26,7 @@ abstract class ModelInterface extends  \yii\db\ActiveRecord
             foreach ($this->errors as $key => $value) {
                 $error .= $key . ': ' . $value[0];
             }
-            echo '<pre>'; print_r($error); echo '</pre>';
+            echo '<pre>'; print_r($error); echo '</pre>'; die();
         }
         return false;
     }

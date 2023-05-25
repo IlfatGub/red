@@ -35,7 +35,7 @@ class Comments extends ModelInterface
         return [
             [['id_products', 'comment'], 'required'],
             [['id_products', 'date', 'deleted', 'id_user'], 'integer'],
-            [['comment', 'user'], 'string', 'max' => 1000],
+            [['comment', '_user'], 'string', 'max' => 1000],
         ];
     }
 
