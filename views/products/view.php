@@ -45,13 +45,14 @@ Pjax::begin();
     <?php $form = ActiveForm::begin(
         [
             'action' => Url::toRoute(['view', 'id' => $_GET['id']]),
-            'options' => ['data-pjax' => true]
+            'options' => []
         ]
     ); ?>
 
     <div class="row pt-3 mt-2" style="background: #DAE8EC">
         <div class="col-11">
             <?= $form->field($comment, 'comment')->textInput(['maxlength' => true])->label(false) ?>
+            <?= $form->field($comment, 'files[]')->fileInput(['multiple' => true])->label(false) ?>
         </div>
         <div class="col-1">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

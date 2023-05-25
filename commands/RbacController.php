@@ -33,6 +33,11 @@ class RbacController extends Controller {
         $user->password = '321qwe';
         $user2 = $user->userCreate();
 
+        $user->username = 'user3';
+        $user->email = 'user3@red.ru';
+        $user->password = '321qwe';
+        $user3 = $user->userCreate();
+
         // Создадим роли админа и покупателей
         $admin = $auth->createRole('admin');
         $shop = $auth->createRole('shop');
@@ -45,5 +50,6 @@ class RbacController extends Controller {
         $auth->assign($admin, $adm->id); 
         $auth->assign($shop, $user1->id); 
         $auth->assign($shop, $user2->id); 
+        $auth->assign($shop, $user3->id); 
     }
 }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "products".
@@ -17,6 +18,7 @@ class Products extends ModelInterface
 {
     public $_description;
     public $_basket;
+    public $_category;
 
     /**
      * {@inheritdoc}
@@ -58,10 +60,24 @@ class Products extends ModelInterface
 	{
 		return $this->hasOne(Basket::className(), ['id_products' => 'id']);
 	}
+    public function getComments()
+	{
+		return $this->hasOne(Comments::className(), ['id_products' => 'id']);
+	}
+    public function getCategory()
+	{
+		return $this->hasOne(Category::className(), ['id_products' => 'id']);
+	}
+
+
+    public function getCategorys(){
+        return $this->category->name;
+    }
 
     public function afterFind()
     {
         $this->_description = substr($this->description, 0, 60).'...';
         $this->_basket = $this->basket ? true : false;
+
     }
 }

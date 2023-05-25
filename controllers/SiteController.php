@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Comments;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -12,8 +13,11 @@ use app\models\ContactForm;
 use app\models\Products;
 use app\models\Produtcs;
 use app\models\SignupForm;
+use Codeception\Step\Comment;
 use Codeception\Stub as CodeceptionStub;
 use Codeception\Util\Stub;
+use PHPUnit\TextUI\Command;
+use yii\debug\models\search\Profile;
 
 class SiteController extends Controller
 {
@@ -87,9 +91,37 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($type = null)
     {
-        $model = Products::find()->all();
+        $query  = Products::find()->joinWith('category');
+        if($type){
+            $cmnt = Comments::find()
+            ->select(['id_products, count(id_products) as cnt'])
+            ->groupBy(['id_products'])
+            ->having(['>', 'cnt', 3])
+            ->limit(5)
+            ->column();
+
+            $query->andWhere(['products.id' => $cmnt]);
+        }
+        $model = $query->all();
+
+        return $this->render('index', 
+            [
+                'model' => $model,
+                'type' => $type,
+            ]
+        );
+    }
+
+
+    public function actionSerach($search = null)
+    {
+        $model = Products::find()
+        ->joinWith('category')
+        ->andWhere(['like', 'category.name', $search])
+        ->orWhere(['like', 'products.name', $search])
+        ->all();
 
         return $this->render('index', 
             [

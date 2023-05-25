@@ -15,6 +15,7 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
+
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,28 +23,38 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+
 <body class="d-flex flex-column h-100">
-<?php $this->beginBody() ?>
+    <?php $this->beginBody() ?>
 
-<header>
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'Red',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
-        ],
-    ]);
+    <header>
+        <?php
+        NavBar::begin([
+            'brandLabel' => 'Red',
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+                'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            ],
+        ]);
 
-    if(Yii::$app->user->can('admin')){
-        $items[]=['label' => 'Пользователи', 'url' => ['/user']];
-	}	if(Yii::$app->user->isGuest){
-		$items[]=['label' => 'Войти', 'url' => ['/site/login']];
-		$items[]=['label' => 'Зарегестрироваться', 'url' => ['/site/signup']];
-	}else{
-		$items[]=['label' => 'Популярное', 'url' => ['/products']];
-		$items[]=['label' => 'Корзина', 'url' => ['/basket']];
-		$items[]='<li>'
+        if (Yii::$app->user->can('admin')) {
+            $items[] = ['label' => 'Пользователи', 'url' => ['/user']];
+        }
+        if (Yii::$app->user->isGuest) {
+            $items[] = ['label' => 'Войти', 'url' => ['/site/login']];
+            $items[] = ['label' => 'Зарегестрироваться', 'url' => ['/site/signup']];
+        } else {
+            $items[] = '<li>'
+            . Html::beginForm(['/site/serach'], 'get', ['class' => 'form-inline my-2 my-lg-0'])
+            . Html::input('text', 'search', $user->name, ['class' => 'form-control mr-sm-2', 'placeholder' => 'search']
+            )
+            . Html::submitButton('ok', ['class' => 'btn btn-outline-success my-2 my-sm-0'])
+            . Html::endForm()
+            . '</li>';
+            $items[] = ['label' => 'Популярное', 'url' => ['/site/index', 'type' => 'popular']];
+            $items[] = ['label' => 'Корзина', 'url' => ['/basket']];
+
+            $items[] = '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
@@ -51,34 +62,35 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>';
-	}
-            
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $items,
-    ]);
-    NavBar::end();
-    ?>
-</header>
+        }
 
-<main role="main" class="flex-shrink-0">
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</main>
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => $items,
+        ]);
+        NavBar::end();
+        ?>
+    </header>
 
-<footer class="footer mt-auto py-3 text-muted">
-    <div class="container">
-        <p class="float-left">&copy; My Company <?= date('Y') ?></p>
-        <p class="float-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
+    </main>
 
-<?php $this->endBody() ?>
+    <footer class="footer mt-auto py-3 text-muted">
+        <div class="container">
+            <p class="float-left">&copy; My Company <?= date('Y') ?></p>
+            <p class="float-right"><?= Yii::powered() ?></p>
+        </div>
+    </footer>
+
+    <?php $this->endBody() ?>
 </body>
+
 </html>
 <?php $this->endPage() ?>

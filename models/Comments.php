@@ -11,6 +11,7 @@ use Yii;
  * @property int $id_products Товар
  * @property int $id_user Пользователь
  * @property int $date Товар
+ * @property string $image Товар
  * @property string $comment Комментарий
  * @property int|null $deleted Удален
  */
@@ -18,6 +19,9 @@ class Comments extends ModelInterface
 {
 
     public $_user;
+    public $cnt;
+    public $imageFiles;
+    public $files;
 
     /**
      * {@inheritdoc}
@@ -34,8 +38,10 @@ class Comments extends ModelInterface
     {
         return [
             [['id_products', 'comment'], 'required'],
+            [['files'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 2,  'skipOnEmpty' => false, ],
             [['id_products', 'date', 'deleted', 'id_user'], 'integer'],
             [['comment', '_user'], 'string', 'max' => 1000],
+            [['imageFiles'], 'safe'],
         ];
     }
 
@@ -57,6 +63,19 @@ class Comments extends ModelInterface
 	{
 		return $this->hasOne(User::className(), ['id' => 'id_user']);
 	}
+
+
+    public function upload()
+    {
+        if ($this->validate()) { 
+            foreach ($this->imageFiles as $file) {
+                $file->saveAs($file->baseName . '.' . $file->extension);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function afterFind()
     {

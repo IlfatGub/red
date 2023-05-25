@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ProductsController implements the CRUD actions for Products model.
@@ -83,9 +84,17 @@ class ProductsController extends Controller
         if ($this->request->isPost) {
             if ($comment->load($this->request->post())) {
                 try {
+                    $comment->imageFiles = UploadedFile::getInstance($comment, 'files');
+                    if ($comment->upload()) {
+                        // file is uploaded successfully
+                        return;
+                    }
+
                     $comment->date = strtotime('now');
                     $comment->id_user = Yii::$app->user->id ;
                     $comment->getSave();
+
+     
 
                     $comment->comment = null;
                 } catch (\Exception $ex) {

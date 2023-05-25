@@ -2,10 +2,12 @@
 
 /** @var yii\web\View $this */
 
+$type = $_GET['type'] ?? null;
+
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
-
 ?>
 <div class="site-index">
     <?php if (Yii::$app->user->can('admin')) : ?>
@@ -23,9 +25,23 @@ $this->title = 'My Yii Application';
                 <a class="btn btn-outline-secondary" href="<?= Url::toRoute(['/rbac/role']) ?>"> Rbac Role</a>
             </div>
         <?php else : ?>
-
+            <?php if ($type) : ?>
+                <div class="alert alert-primary" role="alert">
+                    Популярные категории
+                </div>
+                <?php foreach (array_unique(ArrayHelper::map($model, 'id', 'categorys')) as $item) : ?>
+                    <button type="button" class="btn btn-outline-primary"><?= $item ?></button>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div class="body-content mt-4 mb-4">
                 <hr class="bg-info">
+
+                <?php if ($type) : ?>
+                    <div class="alert alert-secondary" role="alert">
+                        Популярные товары
+                    </div>
+                <?php endif; ?>
+
                 <div class="row">
                     <?php foreach ($model as $item) { ?>
                         <div class="card col-4 p-3">
@@ -51,5 +67,5 @@ $this->title = 'My Yii Application';
 
 
 <script>
-   
+
 </script>
