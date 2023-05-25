@@ -4,7 +4,7 @@ use yii\db\Migration;
 /**
  * Class m221129_145834_crfeate_user_table
  */
-class m221129_145834_crfeate_user_table extends Migration
+class m221129_145834_create_user_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -37,19 +37,4 @@ class m221129_145834_crfeate_user_table extends Migration
     {
         $this->dropTable('user');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m221129_145834_crfeate_user_table cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

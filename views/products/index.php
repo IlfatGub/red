@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Lesson;
+use app\models\Products;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Lessons';
+$this->title = 'Products';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="lesson-index">
+<div class="products-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Lesson', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Products', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -28,19 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name',
+            'image',
             'description',
-            'url:url',
-
-            [
-                'label' => 'Visible',
-                'attribute' => 'visible',
-                'value' => function($model){
-                    return $model->visible == 1 ? 'Опубликован' : 'Скрыт';
-                },
-            ],
+            'deleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Lesson $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Products $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

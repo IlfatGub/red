@@ -37,11 +37,11 @@ AppAsset::register($this);
 
     if(Yii::$app->user->can('admin')){
         $items[]=['label' => 'Пользователи', 'url' => ['/user']];
-		$items[]=['label' => 'Уроки', 'url' => ['/lesson']];
 	}	if(Yii::$app->user->isGuest){
 		$items[]=['label' => 'Войти', 'url' => ['/site/login']];
 		$items[]=['label' => 'Зарегестрироваться', 'url' => ['/site/signup']];
 	}else{
+		$items[]=['label' => 'Корзина', 'url' => ['/site/login']];
 		$items[]='<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(

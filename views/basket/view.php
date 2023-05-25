@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Study $model */
+/** @var app\models\Basket $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Studies', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Baskets', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="study-view">
+<div class="basket-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
-            'lesson_id',
+            'id_products',
+            'id_user',
         ],
     ]) ?>
 

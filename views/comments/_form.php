@@ -4,17 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\models\Study $model */
+/** @var app\models\Comments $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="study-form">
+<div class="comments-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'id_products')->textInput() ?>
 
-    <?= $form->field($model, 'lesson_id')->textInput() ?>
+    <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'deleted')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

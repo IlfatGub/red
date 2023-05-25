@@ -9,10 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\Lesson;
 use app\models\Products;
+use app\models\Produtcs;
 use app\models\SignupForm;
-use app\models\Study;
 use Codeception\Stub as CodeceptionStub;
 use Codeception\Util\Stub;
 
@@ -37,7 +36,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['admin', 'student'],
+                        'roles' => ['admin', 'shop'],
                     ],
                 ],
             ],
@@ -90,28 +89,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $lesson = new Products();
-        $study = new Study();
-
-        // $active = Lesson::find()->where(['id' => $lesson->getPassedProducts()])->all(); // список не просмотренных  уроков
-        // $passed = Lesson::find()->where(['id' => $study->getUserLessonId()])->all(); // список просмотренных уроков
-        $all = Products::find()->where(['id' => $lesson->getLessonId()])->all(); // список просмотренных уроков
+        $model = Products::find()->all();
 
         return $this->render('index', 
             [
-                'active' => $lesson->getPassedProducts(),
-                'passed' => $study->getUserLessonId(),
-                'all' => $all,
+                'model' => $model,
             ]
         );
-    }
-
-
-    public function actionLesson($id)
-    {
-        $model = Lesson::findOne($id);
-
-        return $this->render('lesson', ['model' => $model]);
     }
 
     /**

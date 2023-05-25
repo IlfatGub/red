@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var app\models\Lesson $model */
+/** @var app\models\Category $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Lessons', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="lesson-view">
+<div class="category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,15 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name',
-            'description',
-            'url:url',
-            [
-                'label' => 'Visible',
-                'attribute' => 'visible',
-                'value' => function($model){
-                    return $model->visible == 1 ? 'Опубликован' : 'Скрыт';
-                },
-            ],
+            'deleted',
         ],
     ]) ?>
 

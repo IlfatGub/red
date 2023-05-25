@@ -44,6 +44,6 @@ class RbacController extends Controller {
         // Назначаем роль admin
         $auth->assign($admin, $adm->id); 
         $auth->assign($shop, $user1->id); 
-        $auth->assign($stshopudent, $user2->id); 
+        $auth->assign($shop, $user2->id); 
     }
 }

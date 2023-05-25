@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Study;
+use app\models\Comments;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Studies';
+$this->title = 'Comments';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="study-index">
+<div class="comments-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Study', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Comments', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -27,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'user_id',
-            'lesson_id',
+            'id_products',
+            'comment',
+            'deleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Study $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Comments $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
