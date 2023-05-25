@@ -41,7 +41,8 @@ AppAsset::register($this);
 		$items[]=['label' => 'Войти', 'url' => ['/site/login']];
 		$items[]=['label' => 'Зарегестрироваться', 'url' => ['/site/signup']];
 	}else{
-		$items[]=['label' => 'Корзина', 'url' => ['/site/login']];
+		$items[]=['label' => 'Популярное', 'url' => ['/products']];
+		$items[]=['label' => 'Корзина', 'url' => ['/basket']];
 		$items[]='<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(

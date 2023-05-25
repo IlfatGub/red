@@ -5,6 +5,7 @@
 use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
+
 ?>
 <div class="site-index">
     <?php if (Yii::$app->user->can('admin')) : ?>
@@ -36,7 +37,9 @@ $this->title = 'My Yii Application';
                                 <h5 class="card-title"><?= $item->name ?></h5>
                                 <p class="card-text"><?= $item->_description ?></p>
                                 <a href="<?= Url::toRoute(['/products/view', 'id' => $item->id]) ?>" class="btn btn-primary">Перейти...</a>
-                                <button href="#" id="basket" class="btn btn-warning" data-id="<?= $item->id ?>">Корзина</button>
+                                <button href="#" id="basket-<?= $item->id ?>" class="btn  <?= $item->_basket ? 'btn-success' : 'btn-warning' ?> basket" data-id="<?= $item->id ?>">
+                                    <?= $item->_basket ? 'В корзине' : 'Корзина' ?>
+                                </button>
                             </div>
                         </div>
                     <?php }  ?>
@@ -48,35 +51,5 @@ $this->title = 'My Yii Application';
 
 
 <script>
-    // ------------------------------ Отчет по пользователям -----------------------------------------
-const baskets = document.querySelectorAll('#basket');
-
-if (baskets) {
-    baskets.forEach(function (basket) {
-        basket.addEventListener('click', () => {
-            let id_product = basket.getAttribute('data-id');
-
-            console.log(id_product);
-            jQuery.ajax({
-                type: "GET",
-                url: "/products/basket",
-                data: 'id=' + id_product,
-                success: function (data) {
-                    let r = JSON.parse(data);
-                        let div = document.createElement('div');
-                        div.className = "notify";
-                        div.innerHTML = r.message;
-                      
-                        document.body.append(div);
-                        setTimeout(() => div.remove(), 3000);
-                    // $(content_block).html(datas;
-                    // $('.progress').hide();
-        
-                    // if (remark_report) remark_report.classList.remove('op03');
-                },
-            });
-        });
-    })
-}
-
+   
 </script>

@@ -7,36 +7,32 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var app\models\Basket $model */
 
-$this->title = 'Baskets';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="basket-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Basket', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'id_products',
-            'id_user',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Basket $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
-        ],
-    ]); ?>
+    <div class="body-content mt-4 mb-4">
+        <hr class="bg-info">
+        <div class="row">
+            <?php foreach ($model as $item) { ?>
+                <div class="card col-4 p-3">
+                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false">
+                        <title><?= $item->products->name ?></title>
+                        <rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em"></text>
+                    </svg>
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $item->products->name ?></h5>
+                        <p class="card-text"><?= $item->products->_description ?></p>
+                        <a href="<?= Url::toRoute(['/products/view', 'id' => $item->products->id]) ?>" class="btn btn-primary">Перейти...</a>
+                        <button href="#" id="basket-<?= $item->products->id ?>" class="btn btn-danger basket" data-action='basket' data-id="<?= $item->products->id ?>">
+                            Удалить
+                        </button>
+                    </div>
+                </div>
+            <?php }  ?>
+        </div>
+    </div>
 
 
 </div>

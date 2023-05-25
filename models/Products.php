@@ -16,6 +16,7 @@ use Yii;
 class Products extends ModelInterface
 {
     public $_description;
+    public $_basket;
 
     /**
      * {@inheritdoc}
@@ -33,6 +34,7 @@ class Products extends ModelInterface
         return [
             [['name', 'image', 'description'], 'required'],
             [['deleted'], 'integer'],
+            [['_basket'], 'boolean'],
             [['name', 'image'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 1000],
         ];
@@ -52,9 +54,14 @@ class Products extends ModelInterface
         ];
     }
 
+    public function getBasket()
+	{
+		return $this->hasOne(Basket::className(), ['id_products' => 'id']);
+	}
+
     public function afterFind()
     {
         $this->_description = substr($this->description, 0, 60).'...';
+        $this->_basket = $this->basket ? true : false;
     }
-
 }

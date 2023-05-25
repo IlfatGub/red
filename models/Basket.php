@@ -11,7 +11,7 @@ use Yii;
  * @property int $id_products Товар
  * @property int $id_user Пользователь
  */
-class Basket extends \yii\db\ActiveRecord
+class Basket extends ModelInterface
 {
     /**
      * {@inheritdoc}
@@ -44,20 +44,34 @@ class Basket extends \yii\db\ActiveRecord
         ];
     }
 
+    
+    public function getProducts()
+	{
+		return $this->hasOne(Products::className(), ['id' => 'id_products']);
+	}
+
     public function existsProductsInBasket(){
-        return self::findOne(['id_products' => $this->id_products]);
+        return self::findOne(['id_products' => $this->id_products, 'id_user' => Yii::$app->user->id]);
     }
     
     public function addProduct(){
         $b = new self();
         $b->id_products = $this->id_products;
-        
+        $b->id_user = Yii::$app->user->id;
+        if($b->getSave()){
+            return json_encode(['status' => true, 'method' => 'add' ]);
+        }else{
+            return json_encode(['status' => false]);
+        }
     }
 
+
     public function products(){
-        if($b = $this->existsProductsInBasket())
+        if($b = $this->existsProductsInBasket()){
             $b->delete();
-        
-        
+            return  json_encode(['status' => true, 'method' => 'delete' ]);
+        }
+
+        echo $this->addProduct();
     }
 }

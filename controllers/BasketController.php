@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\Basket;
+use app\widgets\Alert;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -38,22 +40,13 @@ class BasketController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Basket::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $model = Basket::find()
+            ->where(['id_user' =>  Yii::$app->user->id])
+            ->joinWith(['products'])
+            ->all();
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model' => $model,
         ]);
     }
 
