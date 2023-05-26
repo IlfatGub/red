@@ -19,6 +19,7 @@ class Comments extends ModelInterface
 {
 
     public $_user;
+    public $_image;
     public $cnt;
     public $imageFiles;
     public $files;
@@ -38,10 +39,10 @@ class Comments extends ModelInterface
     {
         return [
             [['id_products', 'comment'], 'required'],
-            [['files'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 2,  'skipOnEmpty' => false, ],
+            [['files'], 'file', 'maxFiles' => 3,  'skipOnEmpty' => false, ],
             [['id_products', 'date', 'deleted', 'id_user'], 'integer'],
             [['comment', '_user'], 'string', 'max' => 1000],
-            [['imageFiles'], 'safe'],
+            [['imageFiles', 'image'], 'safe'],
         ];
     }
 
@@ -67,11 +68,14 @@ class Comments extends ModelInterface
 
     public function upload()
     {
+        $ar = array();
         if ($this->validate()) { 
-            foreach ($this->imageFiles as $file) {
-                $file->saveAs($file->baseName . '.' . $file->extension);
+            foreach ($this->files as $file) {
+                $file_path = hash_file('md5', $file->tempName).'.' . $file->extension;
+                $file->saveAs('uploads/'.$file_path);
+                array_push($ar, $file_path);
             }
-            return true;
+            return json_encode($ar);
         } else {
             return false;
         }
@@ -81,6 +85,7 @@ class Comments extends ModelInterface
     {
         $this->date = date('Y-m-d H:i:s', $this->date);
         $this->_user = $this->user->username;
+        $this->_image = json_decode($this->image);
     }
 
     public function existsCommentsByProduct(){

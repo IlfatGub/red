@@ -24,6 +24,12 @@ class m230524_161313_create_comments_table extends Migration
         ]);
 
 
+        $image = ['51edf9e34c3aa89ac0babb07b72979ad.jpg',
+        '090a15da81e1d65a6c75c8f6184170a0.jpg',
+        '8858fcd22947f8a185ad570846782010.jpg',
+        'a12745d3a5e9ba7a65f79952552c621d.jpg',
+    ];
+
         $faker = Factory::create('ru_RU');
         
         for ($i = 1; $i <= 100; $i++) {
@@ -34,6 +40,7 @@ class m230524_161313_create_comments_table extends Migration
                     'comment' => $faker->text,
                     'date' => strtotime('now'),
                     'id_user' => rand(2,4),
+                    'image' => json_encode([$image[rand(2,4)]]),
                 ]
             );
         }
