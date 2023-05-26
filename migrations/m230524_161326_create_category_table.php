@@ -21,7 +21,7 @@ class m230524_161326_create_category_table extends Migration
 
 
 
-        $category = ['sport', 'category', 'foot', 'number', 'time', 'text', 'string', 'name', 'id', 'result'];
+        $category = ['sport', 'category', 'foot', 'number', 'time', 'text', 'string', 'model', 'id', 'result'];
         // echo shell_exec("php yii gii/model --tableName=category --modelClass=Category --interactive=0 --overwrite=1 --ns=app\\models");
         // echo shell_exec("php yii gii/crud --modelClass=app\\models\\Category --controllerClass=app\\controllers\CategoryController");
 
@@ -30,7 +30,7 @@ class m230524_161326_create_category_table extends Migration
                 '{{%category}}',
                 [
                     'id_products' => rand(1, 25),
-                    'name' => $category[rand(0, count($category))],
+                    'name' => $category[rand(0, 9)],
                 ]
             );
         }

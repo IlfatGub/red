@@ -107,7 +107,9 @@ class SiteController extends Controller
             $query->andWhere(['products.id' => $cmnt]);
         }
         $model = $query->all();
-        $_model = array_unique(ArrayHelper::map($model, 'id', 'categorys'));
+        
+        if($type)
+            $_model = array_unique(ArrayHelper::map($model, 'id', 'categorys'));
 
         return $this->render(
             'index',
