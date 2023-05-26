@@ -60,15 +60,16 @@ class Products extends ModelInterface
 	{
 		return $this->hasOne(Basket::className(), ['id_products' => 'id']);
 	}
+    
     public function getComments()
 	{
 		return $this->hasOne(Comments::className(), ['id_products' => 'id']);
 	}
+
     public function getCategory()
 	{
 		return $this->hasOne(Category::className(), ['id_products' => 'id']);
 	}
-
 
     public function getCategorys(){
         return $this->category->name;

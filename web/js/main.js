@@ -21,26 +21,21 @@
                      if (d.status === true) {
                          if (d.method === 'delete') {
                              if(action === 'basket'){
-                                basket.parentNode.parentNode.remove();
+                                basket.parentNode.parentNode.remove(); // удаляем весь блок с товаром в корзине
                              }else{
+                                // меняем цвет и текст
                                 basket.innerHTML = 'Корзина';
                                 basket.classList.remove('btn-success');
                                 basket.classList.add('btn-warning');
                              }
                          } else {
+                            // меняем цвет и текст
                              basket.innerHTML = 'В корзине';
                              basket.classList.remove('btn-warning');
                              basket.classList.add('btn-success');
                          }
 
                      }
-
-                     // let r = JSON.parse(data);
-                     // setTimeout(() => (this).remove(), 3000);
-                     // $(content_block).html(datas;
-                     // $('.progress').hide();
-
-                     // if (remark_report) remark_report.classList.remove('op03');
                  },
              });
          });

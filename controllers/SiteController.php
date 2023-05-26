@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use app\models\Comments;
 use Yii;
 use yii\filters\AccessControl;
@@ -18,6 +19,7 @@ use Codeception\Stub as CodeceptionStub;
 use Codeception\Util\Stub;
 use PHPUnit\TextUI\Command;
 use yii\debug\models\search\Profile;
+use yii\helpers\ArrayHelper;
 
 class SiteController extends Controller
 {
@@ -72,7 +74,7 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
- 
+
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -80,12 +82,12 @@ class SiteController extends Controller
                 }
             }
         }
- 
+
         return $this->render('signup', [
             'model' => $model,
         ]);
     }
-    
+
     /**
      * Displays homepage.
      *
@@ -94,20 +96,23 @@ class SiteController extends Controller
     public function actionIndex($type = null)
     {
         $query  = Products::find()->joinWith('category');
-        if($type){
+        if ($type) {
             $cmnt = Comments::find()
-            ->select(['id_products, count(id_products) as cnt'])
-            ->groupBy(['id_products'])
-            ->having(['>', 'cnt', 3])
-            ->limit(5)
-            ->column();
+                ->select(['id_products, count(id_products) as cnt'])
+                ->groupBy(['id_products'])
+                ->having(['>', 'cnt', 3])
+                ->limit(5)
+                ->column();
 
             $query->andWhere(['products.id' => $cmnt]);
         }
         $model = $query->all();
+        $_model = array_unique(ArrayHelper::map($model, 'id', 'categorys'));
 
-        return $this->render('index', 
+        return $this->render(
+            'index',
             [
+                '_model' => $_model,
                 'model' => $model,
                 'type' => $type,
             ]
@@ -118,14 +123,22 @@ class SiteController extends Controller
     public function actionSerach($search = null)
     {
         $model = Products::find()
-        ->joinWith('category')
-        ->andWhere(['like', 'category.name', $search])
-        ->orWhere(['like', 'products.name', $search])
-        ->all();
+            ->andWhere(['like', 'name', $search])
+            ->all();
 
-        return $this->render('index', 
+        $_model = Category::find()
+            ->select('name')
+            ->distinct()
+            ->Where(['like', 'name', $search])
+            ->all();
+        
+        $_model  = ArrayHelper::map($_model, 'id', 'name');
+            
+        return $this->render(
+            'index',
             [
                 'model' => $model,
+                '_model' => $_model,
             ]
         );
     }

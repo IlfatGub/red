@@ -46,7 +46,7 @@ AppAsset::register($this);
         } else {
             $items[] = '<li>'
             . Html::beginForm(['/site/serach'], 'get', ['class' => 'form-inline my-2 my-lg-0'])
-            . Html::input('text', 'search', $user->name, ['class' => 'form-control mr-sm-2', 'placeholder' => 'search']
+            . Html::input('text', 'search', $_GET['search'] ?? null, ['class' => 'form-control mr-sm-2', 'placeholder' => 'search']
             )
             . Html::submitButton('ok', ['class' => 'btn btn-outline-success my-2 my-sm-0'])
             . Html::endForm()

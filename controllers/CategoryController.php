@@ -40,7 +40,6 @@ class CategoryController extends Controller
      */
     public function actionIndex($name)
     {
-
         $category =  ArrayHelper::map(Category::findAll(['name' => $name]), 'id', 'id_products');
 
         return $this->render('/site/index', [
