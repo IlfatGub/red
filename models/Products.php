@@ -78,6 +78,5 @@ class Products extends ModelInterface
     {
         $this->_description = substr($this->description, 0, 60).'...';
         $this->_basket = $this->basket ? true : false;
-
     }
 }

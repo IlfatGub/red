@@ -88,6 +88,7 @@ class Comments extends ModelInterface
         $this->_image = json_decode($this->image);
     }
 
+    // проверка на наличие комментариев у товара
     public function existsCommentsByProduct(){
         return self::find()
             ->where(['id_products' => $this->id_products])
@@ -95,11 +96,13 @@ class Comments extends ModelInterface
             ->exists();
     }
 
+    // список коментариев по товару
     public function getCommentsByProduct(){
         if($this->existsCommentsByProduct())
             return self::find()
                 ->where(['id_products' => $this->id_products])
                 ->andWhere(['is', 'deleted', new \yii\db\Expression('null')])
                 ->all();
+        return false;
     }
 }

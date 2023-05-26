@@ -84,10 +84,11 @@ class ProductsController extends Controller
         if ($this->request->isPost) {
             if ($comment->load($this->request->post())) {
                 try {
+                    // загрузка файла
                     $comment->files = UploadedFile::getInstances($comment, 'files');
                     if ($_file = $comment->upload()) 
                         $comment->image = $_file;
-                        
+
                     $comment->date = strtotime('now');
                     $comment->id_user = Yii::$app->user->id ;
                     $comment->getSave();

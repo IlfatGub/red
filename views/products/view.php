@@ -39,7 +39,6 @@ Pjax::begin();
                     <td> <b><?= $item->_user ?>. </b> <?= $item->comment ?></td>
                     <?php if ($item->image) : ?>
                         <td>
-
                             <?php foreach ($item->_image as $image) : ?>
                                 <a href="<?= '/uploads/' . $image ?>" data-pjax = "0">
                                     <img src="<?= '/uploads/' . $image ?>" class="img-thumbnail" alt="..." style="width:50px;">

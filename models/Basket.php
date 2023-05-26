@@ -50,10 +50,12 @@ class Basket extends ModelInterface
 		return $this->hasOne(Products::className(), ['id' => 'id_products']);
 	}
 
+    // проверка на наличие в корхине у пользователя
     public function existsProductsInBasket(){
         return self::findOne(['id_products' => $this->id_products, 'id_user' => Yii::$app->user->id]);
     }
     
+    // добавляем в корзину
     public function addProduct(){
         $b = new self();
         $b->id_products = $this->id_products;
@@ -65,7 +67,7 @@ class Basket extends ModelInterface
         }
     }
 
-
+    // проверка на наличие товара в корзине если нет то добавляем, если есть то удаляем
     public function products(){
         if($b = $this->existsProductsInBasket()){
             $b->delete();

@@ -30,7 +30,9 @@ $this->title = 'My Yii Application';
                     Популярные категории
                 </div>
                 <?php foreach (array_unique(ArrayHelper::map($model, 'id', 'categorys')) as $item) : ?>
-                    <button type="button" class="btn btn-outline-primary"><?= $item ?></button>
+                    <?php if($item): ?>
+                        <button type="button" class="btn btn-outline-primary"><?= $item ?></button>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
             <div class="body-content mt-4 mb-4">
@@ -41,7 +43,6 @@ $this->title = 'My Yii Application';
                         Популярные товары
                     </div>
                 <?php endif; ?>
-
                 <div class="row">
                     <?php foreach ($model as $item) { ?>
                         <div class="card col-4 p-3">
