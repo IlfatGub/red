@@ -75,7 +75,8 @@ yii rbac/init
 > Под админом(admin), есть простая админка(сгенерированная GII)
 
 
+---
 ![image](https://github.com/IlfatGub/red/assets/13871390/f4cbbbd7-d4c2-400f-97a4-3f8c4bd82a08)
-
+---
 ![image](https://github.com/IlfatGub/red/assets/13871390/c9f4a8be-8fdd-4b79-9158-4600e1eaa60c)
 
