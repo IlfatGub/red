@@ -53,14 +53,16 @@ basket – таблица корзина
 
 
 # Учетки
-login:admin, pass:admin
 
-login:user1, pass:user1
+| Rank | Languages |
+|-----:|-----------|
+|     admin| admin|
+|     user1| user1    |
+|     user2| user2       |
+|     user3| user3       |
 
-login:user2, pass:user2
+---
+> Под админом(admin), есть простая админка(сгенерированная GII)
 
-login:user3, pass:user3
-
-Под админом(admin), есть простая админка(сгенерированная GII)
 
 
