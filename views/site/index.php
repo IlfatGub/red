@@ -31,7 +31,7 @@ $this->title = 'My Yii Application';
                 </div>
                 <?php foreach (array_unique(ArrayHelper::map($model, 'id', 'categorys')) as $item) : ?>
                     <?php if($item): ?>
-                        <button type="button" class="btn btn-outline-primary"><?= $item ?></button>
+                        <a href="<?= Url::toRoute(['/category', 'name' => $item]) ?>" class="btn btn-outline-primary"><?= $item ?> </a>
                     <?php endif; ?>
                 <?php endforeach; ?>
             <?php endif; ?>
@@ -41,6 +41,11 @@ $this->title = 'My Yii Application';
                 <?php if ($type) : ?>
                     <div class="alert alert-secondary" role="alert">
                         Популярные товары
+                    </div>
+                <?php endif; ?>
+                <?php if ($category_name) : ?>
+                    <div class="alert alert-secondary" role="alert">
+                        Товары категории: <?= $category_name ?>
                     </div>
                 <?php endif; ?>
                 <div class="row">

@@ -3,10 +3,12 @@
 namespace app\controllers;
 
 use app\models\Category;
+use app\models\Products;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -36,24 +38,14 @@ class CategoryController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($name)
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Category::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
+        $category =  ArrayHelper::map(Category::findAll(['name' => $name]), 'id', 'id_products');
+
+        return $this->render('/site/index', [
+            'model' => Products::find()->where(['id' => $category])->all(),
+            'category_name' => $name,
         ]);
     }
 

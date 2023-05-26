@@ -33,6 +33,11 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
+    public function getProducts()
+	{
+		return $this->hasOne(Products::className(), ['id' => 'id_products']);
+	}
+
     /**
      * {@inheritdoc}
      */
